@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Duo Mono</title>
+
+		<style>
+			@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+			* {
+				font-family: "Inter", Sans-serif;
+			}
+
+			.switch {
+				position: relative;
+				display: inline-block;
+				width: 36px;
+				height: 18px;
+			}
+
+			.switch input {
+				opacity: 0;
+				width: 0;
+				height: 0;
+			}
+
+			.switch:hover {
+				filter: brightness(0.8);
+			}
+
+			.slider {
+				position: absolute;
+				cursor: pointer;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #ccc;
+				-webkit-transition: 200ms;
+				transition: 200ms;
+			}
+
+			.slider:before {
+				position: absolute;
+				content: "";
+				height: 10px;
+				width: 10px;
+				left: 4px;
+				bottom: 4px;
+				background-color: white;
+				-webkit-transition: 200ms;
+				transition: 200ms;
+			}
+
+			input:checked + .slider {
+				background-color: #2196f3;
+			}
+
+			input:focus + .slider {
+				box-shadow: 0 0 1px #2196f3;
+			}
+
+			input:checked + .slider:before {
+				-webkit-transform: translateX(18px);
+				-ms-transform: translateX(18px);
+				transform: translateX(18px);
+			}
+
+			.slider.round {
+				border-radius: 26px;
+			}
+
+			.slider.round:before {
+				border-radius: 50%;
+			}
+
+			.grid {
+				display: grid;
+				align-items: center;
+				grid-template-columns: auto 1fr;
+				row-gap: 5px;
+			}
+
+			.grid > span > label {
+				float: right;
+			}
+
+			body {
+				padding: 10px;
+				width: 250px;
+			}
+
+			h4 {
+				font-size: 10pt;
+				margin: 0;
+			}
+
+			hr {
+				grid-column: 1 / -1;
+				width: 100%;
+				border: none;
+				border-top: 2px solid #ccc;
+			}
+
+			button {
+				font-size: 8pt;
+				background: none;
+				color: red;
+				border: none;
+				padding: 0;
+				text-align: left;
+				width: 100%;
+				grid-column: 1 / -1;
+				cursor: pointer;
+				padding: 4px;
+				margin: -4px;
+				border-radius: 3px;
+				margin-top: 10px;
+			}
+
+			button:hover {
+				background-color: rgba(255, 0, 0, 0.644);
+				color: white;
+			}
+
+			button::after {
+				font-family: inherit;
+				padding-right: 5px;
+				font-size: 8pt;
+				height: 13px;
+				content: "✗";
+				float: right;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="grid">
+			<h4>Duo Auto Login</h4>
+			<span>
+				<label class="switch">
+					<input id="duo-auto-login" type="checkbox" />
+					<span class="slider round"></span>
+				</label>
+			</span>
+
+			<button id="erase">Erase Auto Login Secret</button>
+		</div>
+		<script src="index.js"></script>
+	</body>
+</html>

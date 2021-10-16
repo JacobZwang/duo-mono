@@ -1,0 +1,23 @@
+{
+	"manifest_version": 3,
+	"name": "Duo Mono",
+	"version": "0.1.0",
+	"description": "Automatically log into Duo 2fa. If you have chrome sync turned on it will work anywhere you are signed into chrome.",
+	"icons": {
+		"16": "./duo-mono-icon-16.png",
+		"48": "./duo-mono-icon-48.png",
+		"128": "./duo-mono-icon-128.png"
+	},
+	"content_scripts": [
+		{
+			"matches": ["*://*/*"],
+			"js": ["./build/main.js"],
+			"run_at": "document_end",
+			"all_frames": true
+		}
+	],
+	"permissions": ["storage", "activeTab"],
+	"action": {
+		"default_popup": "index.html"
+	}
+}
