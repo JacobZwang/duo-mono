@@ -1,3 +1,5 @@
 public/build
 node_modules
 .env
+.history
+.pnpm-debug.log
