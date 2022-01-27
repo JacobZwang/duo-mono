@@ -1,4 +1,4 @@
-declare var chrome: {
+declare const chrome: {
 	storage: {
 		sync: {
 			set: (data: Record<string, any>, callback?: () => void) => void;

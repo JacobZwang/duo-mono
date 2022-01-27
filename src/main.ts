@@ -1,8 +1,8 @@
-import HOTP from "./hotp";
+import hotp from "./hotp";
 
 (async () => {
 	// retrieve prefrences or set to true if not found
-	let prefs: {
+	const prefs: {
 		duoAutoLogin: boolean;
 	} = await new Promise((resolve, reject) => {
 		chrome.storage.sync.get(["duoAutoLogin"], (data) => {
@@ -27,7 +27,7 @@ import HOTP from "./hotp";
 			async (secret: { count: string; hotp: string }) => {
 				if (secret.hotp) {
 					const count = parseInt(secret.count ?? "1");
-					const token = await HOTP.generateHOTP(secret.hotp, count);
+					const token = await hotp(secret.hotp, count);
 
 					const selectDevice = document.getElementsByName(
 						"device"
@@ -42,7 +42,7 @@ import HOTP from "./hotp";
 
 					selectDevice.value = device.value;
 
-					//@ts-ignore
+					//@ts-expect-error I'm not sure why I'm setting like this, but since it works, I'm not inclined to change it
 					device.selected = "selected";
 
 					const button = document.getElementById("passcode");
@@ -73,13 +73,19 @@ import HOTP from "./hotp";
 		title.style.fontWeight = "bold";
 		title.style.marginBottom = "20px";
 		title.style.fontSize = "16px";
-		title.style.color = "blue";
-		title.style.border = "1px solid blue";
+		title.style.color = "black";
+		title.style.border = "2px solid #63B246";
 		title.style.borderRadius = "3px";
 		title.style.padding = "5px";
+		title.style.backgroundColor = "white";
 
-		title.innerHTML =
-			"We need to add a new device to set up auto login using the extension. Please allow this using your usual auth method.";
+		title.innerHTML = `
+			Thanks for getting Duo Mono!
+			<br/>
+			<span style="font-size: 12px;">
+				You'll need to authenticate yourself manually one last time so we can add a new device to your account.
+			</span>
+		`;
 	}
 
 	// choose to enroll device
@@ -125,9 +131,7 @@ import HOTP from "./hotp";
 			.then((json) => {
 				const secret = json.response.hotp_secret;
 
-				console.log("SECRET", secret);
-
-				chrome.storage.sync.set({ hotp: secret }, () => {});
+				chrome.storage.sync.set({ hotp: secret });
 
 				if (secret) {
 					chrome.storage.sync.set({ hotp: secret }, () => {
@@ -156,17 +160,25 @@ import HOTP from "./hotp";
 			)[0] as HTMLButtonElement
 		).click();
 
-		document.getElementById("continue-to-login").click();
-
 		const title = document.getElementById("header-title");
 
-		title.innerHTML = "Reload the page and you should be automatically logged in.";
+		title.innerHTML = `
+		Setup Complete!
+		<br/>
+		<span style="font-size: 12px;">
+			Reload this page and you should be automatically logged in.
+		</span>
+	`;
+
 		title.style.fontWeight = "bold";
 		title.style.marginBottom = "20px";
 		title.style.fontSize = "16px";
-		title.style.color = "blue";
-		title.style.border = "1px solid blue";
+		title.style.color = "black";
+		title.style.border = "2px solid #63B246";
 		title.style.borderRadius = "3px";
 		title.style.padding = "5px";
+		title.style.backgroundColor = "white";
+
+		document.getElementById("continue-to-login").click();
 	}
 })();
