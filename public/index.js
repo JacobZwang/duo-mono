@@ -17,7 +17,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 function eraseHOTPSecret() {
 	chrome.storage.sync.set({
-		hotp: ""
+		hotp: "",
+		count: 0
 	});
 
 	erase.style.display = "none";
